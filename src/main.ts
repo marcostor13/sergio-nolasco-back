@@ -29,7 +29,11 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   app.enableCors({
-    origin: true,
+    origin: [
+      'http://localhost:4321',
+      'http://127.0.0.1:4321',
+      'https://sergio.marcostorresalarcon.com'
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
     allowedHeaders: '*',

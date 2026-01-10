@@ -24,7 +24,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Instalar solo dependencias de producción
-RUN npm install --only=production && npm cache clean --force
+RUN npm install --legacy-peer-deps --only=production && npm cache clean --force
 
 # Copiar la aplicación compilada (la carpeta dist) desde la etapa 'builder'
 COPY --from=builder /usr/src/app/dist ./dist
