@@ -15,7 +15,8 @@ async function bootstrap() {
   );
 
   await app.register(fastifyCookie, {
-    secret: process.env.COOKIE_SECRET || 'your-cookie-secret-change-in-production',
+    secret:
+      process.env.COOKIE_SECRET || 'your-cookie-secret-change-in-production',
   });
 
   app.useGlobalPipes(
@@ -30,9 +31,8 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'http://localhost:4321',
-      'http://127.0.0.1:4321',
-      'https://sergio.marcostorresalarcon.com'
+      'https://sergionolascoe.netlify.app', // Tu dominio de Netlify
+      'http://localhost:4321', // Tu entorno local de Astro
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
