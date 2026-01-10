@@ -7,12 +7,15 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { appConfig } from './config/app.config';
+import { databaseConfig } from './config/database.config';
+import { emailConfig } from './config/email.config';
+import { jwtConfig } from './config/jwt.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig],
+      load: [appConfig, databaseConfig, emailConfig, jwtConfig],
     }),
     MongooseModule.forRootAsync({
       useFactory: () => ({

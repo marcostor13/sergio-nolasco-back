@@ -45,14 +45,14 @@ export class AuthController {
       path: '/',
     });
 
-    return result;
+    reply.send(result);
   }
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Res() reply: FastifyReply) {
     reply.clearCookie('access_token', { path: '/' });
-    return { message: 'Sesión cerrada correctamente' };
+    reply.send({ message: 'Sesión cerrada correctamente' });
   }
 
   @Post('forgot-password')

@@ -31,12 +31,23 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'https://sergionolascoe.netlify.app', // Tu dominio de Netlify
-      'http://localhost:4321', // Tu entorno local de Astro
+      'https://sergionolascoe.netlify.app',
+      'http://localhost:4321',
+      'http://127.0.0.1:4321',
+      'https://sergio.marcostorresalarcon.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
-    allowedHeaders: '*',
+    allowedHeaders: [
+      'Content-Type',
+      'Accept',
+      'Authorization',
+      'X-Requested-With',
+      'Origin',
+    ],
+    exposedHeaders: ['Set-Cookie'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   const port = process.env.PORT ?? 3000;
