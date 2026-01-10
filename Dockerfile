@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Instalar todas las dependencias (incluyendo devDependencies para el build)
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copiar el resto de los archivos del proyecto
 COPY . .
