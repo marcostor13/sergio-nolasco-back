@@ -59,4 +59,4 @@ jobs:
 
             # Ejecutamos el script remoto PASÁNDOLE los argumentos
             # que tu script de PowerShell original le pasaba
-            ./deploy.sh marcostor13/sergio-nolasco-back sergio-nolasco-back 3027 .env_sergio
+            ./deploy.sh marcostor13/sergio-nolasco-back sergio-nolasco-back 3000 .env_sergio
