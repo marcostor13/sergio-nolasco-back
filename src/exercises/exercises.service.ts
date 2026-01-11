@@ -174,4 +174,67 @@ export class ExercisesService {
   async getMasteryChallenges(userId: string) {
     return this.challengeModel.find({ user: userId }).exec();
   }
+
+  // Global Progress
+  async getOverallProgress(userId: string) {
+    const [
+      financial,
+      time,
+      vitality,
+      influence,
+      excuses,
+      belief,
+      paradigm,
+      missions,
+      goal,
+      audit,
+      challenges,
+    ] = await Promise.all([
+      this.financialModel.exists({ user: userId }),
+      this.timeModel.exists({ user: userId }),
+      this.vitalityModel.exists({ user: userId }),
+      this.influenceModel.exists({ user: userId }),
+      this.excusesModel.exists({ user: userId }),
+      this.beliefModel.exists({ user: userId }),
+      this.paradigmModel.exists({ user: userId }),
+      this.missionModel.exists({ user: userId }),
+      this.goalModel.exists({ user: userId }),
+      this.auditModel.exists({ user: userId }),
+      this.challengeModel.exists({ user: userId }),
+    ]);
+
+    const totalSteps = 11;
+    let completedSteps = 0;
+
+    if (financial) completedSteps++;
+    if (time) completedSteps++;
+    if (vitality) completedSteps++;
+    if (influence) completedSteps++;
+    if (excuses) completedSteps++;
+    if (belief) completedSteps++;
+    if (paradigm) completedSteps++;
+    if (missions) completedSteps++;
+    if (goal) completedSteps++;
+    if (audit) completedSteps++;
+    if (challenges) completedSteps++;
+
+    const percentage = Math.round((completedSteps / totalSteps) * 100);
+
+    return {
+      percentage,
+      details: {
+        financial: !!financial,
+        time: !!time,
+        vitality: !!vitality,
+        influence: !!influence,
+        excuses: !!excuses,
+        belief: !!belief,
+        paradigm: !!paradigm,
+        missions: !!missions,
+        goal: !!goal,
+        audit: !!audit,
+        challenges: !!challenges,
+      },
+    };
+  }
 }

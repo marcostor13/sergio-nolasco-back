@@ -148,4 +148,10 @@ export class ExercisesController {
   async getChallenges(@Req() req: RequestWithUser) {
     return this.exercisesService.getMasteryChallenges(req.user.id);
   }
+
+  // Progress
+  @Get('progress')
+  async getProgress(@Req() req: RequestWithUser) {
+    return this.exercisesService.getOverallProgress(req.user.id);
+  }
 }
