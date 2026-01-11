@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
+import { ExercisesModule } from './exercises/exercises.module';
 import { appConfig } from './config/app.config';
 import { databaseConfig } from './config/database.config';
 import { emailConfig } from './config/email.config';
@@ -25,6 +26,7 @@ import { jwtConfig } from './config/jwt.config';
     UsersModule,
     AuthModule,
     EmailModule,
+    ExercisesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
