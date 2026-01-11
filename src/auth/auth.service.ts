@@ -41,8 +41,22 @@ export class AuthService {
 
     await this.emailService.sendWelcomeEmail(user, verificationToken);
 
-    const { password, ...result } = user.toObject();
-    return result;
+    const { password, ...userResult } = user.toObject();
+    
+    // Generar token para login automático
+    const payload = { email: user.email, sub: user._id.toString() };
+    const accessToken = this.jwtService.sign(payload);
+
+    return {
+      user: {
+        id: user._id.toString(),
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isEmailVerified: user.isEmailVerified,
+      },
+      accessToken,
+    };
   }
 
   async login(loginDto: LoginDto) {

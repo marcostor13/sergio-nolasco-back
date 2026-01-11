@@ -24,8 +24,23 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
+  async register(
+    @Body() createUserDto: CreateUserDto,
+    @Res() reply: FastifyReply,
+  ) {
+    const result = await this.authService.register(createUserDto);
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    // Set cookie for auto-login after registration
+    reply.setCookie('access_token', result.accessToken, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      maxAge: 7 * 24 * 60 * 60,
+      path: '/',
+    });
+
+    reply.send(result);
   }
 
   @Post('login')
@@ -35,13 +50,13 @@ export class AuthController {
     @Res() reply: FastifyReply,
   ) {
     const result = await this.authService.login(loginDto);
-    const isProduction = this.configService.get('nodeEnv') === 'production';
+    const isProduction = process.env.NODE_ENV === 'production';
 
     reply.setCookie('access_token', result.accessToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60,
+      sameSite: isProduction ? 'none' : 'lax',
+      maxAge: 7 * 24 * 60 * 60, // Segundos
       path: '/',
     });
 
